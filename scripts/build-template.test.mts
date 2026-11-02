@@ -144,18 +144,20 @@ describe('templateSections', () => {
         parameters: [],
         code: '',
         permissions: [],
+        tests: 'scenarios: []',
       },
       'data.gtmOnSuccess();',
     );
     assert.deepEqual(
       sections.map((section) => section.name),
-      ['INFO', 'TEMPLATE_PARAMETERS', 'SANDBOXED_JS_FOR_WEB_TEMPLATE', 'WEB_PERMISSIONS'],
+      ['INFO', 'TEMPLATE_PARAMETERS', 'SANDBOXED_JS_FOR_WEB_TEMPLATE', 'WEB_PERMISSIONS', 'TESTS'],
     );
     assert.deepEqual(JSON.parse(sections[0]?.content ?? ''), {
       displayName: 'Pyxis Analytics',
       brand: { id: 'brand_dummy', thumbnail: 'data:image/png;base64,AQID' },
     });
     assert.equal(sections[2]?.content, 'data.gtmOnSuccess();');
+    assert.equal(sections[4]?.content, 'scenarios: []');
   });
 });
 

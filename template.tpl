@@ -496,3 +496,150 @@ ___WEB_PERMISSIONS___
 ]
 
 
+___TESTS___
+
+scenarios:
+  - name: Initialize loads the pinned tracker once and initializes it
+    code: |-
+      const data = initData();
+      mock('injectScript', function (url, onSuccess, onFailure, cacheToken) {
+        assertThat(url).isEqualTo(SCRIPT_URL);
+        assertThat(cacheToken).isEqualTo('pyxis-analytics');
+        onSuccess();
+      });
+      mock('callInWindow', function () {});
+
+      runCode(data);
+
+      assertApi('callInWindow').wasCalledWith('pyxis.init', {
+        key: data.publicKey,
+        endpoint: data.endpoint
+      });
+      assertApi('gtmOnSuccess').wasCalled();
+      assertApi('gtmOnFailure').wasNotCalled();
+  - name: Initialize fails the tag when the script cannot load
+    code: |-
+      mock('injectScript', function (url, onSuccess, onFailure) {
+        onFailure();
+      });
+      mock('callInWindow', function () {});
+
+      runCode(initData());
+
+      assertApi('callInWindow').wasNotCalled();
+      assertApi('gtmOnFailure').wasCalled();
+      assertApi('gtmOnSuccess').wasNotCalled();
+  - name: Initialize fails the tag when the container policy blocks the script
+    code: |-
+      mock('queryPermission', false);
+      mock('injectScript', function () {
+        fail('injectScript must not run when the policy blocks the script');
+      });
+
+      runCode(initData());
+
+      assertApi('injectScript').wasNotCalled();
+      assertApi('gtmOnFailure').wasCalled();
+  - name: Track event sends the event with its properties
+    code: |-
+      mock('copyFromWindow', trackerOnPage);
+      mock('callInWindow', function () {});
+
+      runCode(trackData());
+
+      assertApi('callInWindow').wasCalledWith('pyxis.track', 'signup_completed', { plan: 'pro' });
+      assertApi('gtmOnSuccess').wasCalled();
+  - name: Track event sends no properties when the table has no rows
+    code: |-
+      const data = trackData();
+      data.eventProperties = [];
+      mock('copyFromWindow', trackerOnPage);
+      mock('callInWindow', function () {});
+
+      runCode(data);
+
+      assertApi('callInWindow').wasCalledWith('pyxis.track', 'signup_completed', undefined);
+      assertApi('gtmOnSuccess').wasCalled();
+  - name: Track event fails the tag when the tracker is not on the page
+    code: |-
+      mock('copyFromWindow', undefined);
+      mock('callInWindow', function () {});
+
+      runCode(trackData());
+
+      assertApi('callInWindow').wasNotCalled();
+      assertApi('gtmOnFailure').wasCalled();
+  - name: Track event fails the tag for a name reserved for the tracker
+    code: |-
+      const data = trackData();
+      data.eventName = 'page_view';
+      mock('copyFromWindow', trackerOnPage);
+      mock('callInWindow', function () {});
+
+      runCode(data);
+
+      assertApi('callInWindow').wasNotCalled();
+      assertApi('gtmOnFailure').wasCalled();
+  - name: Nothing loads and nothing is sent while analytics_storage is denied
+    code: |-
+      mock('isConsentGranted', function (consentType) {
+        assertThat(consentType).isEqualTo('analytics_storage');
+        return false;
+      });
+      mock('injectScript', function () {});
+      mock('callInWindow', function () {});
+
+      runCode(initData());
+      runCode(trackData());
+
+      assertApi('injectScript').wasNotCalled();
+      assertApi('callInWindow').wasNotCalled();
+      assertApi('gtmOnSuccess').wasCalled();
+      assertApi('gtmOnFailure').wasNotCalled();
+  - name: The consent check can be turned off
+    code: |-
+      const data = initData();
+      data.respectConsent = false;
+      mock('isConsentGranted', false);
+      mock('injectScript', function (url, onSuccess) {
+        onSuccess();
+      });
+      mock('callInWindow', function () {});
+
+      runCode(data);
+
+      assertApi('isConsentGranted').wasNotCalled();
+      assertApi('callInWindow').wasCalledWith('pyxis.init', {
+        key: data.publicKey,
+        endpoint: data.endpoint
+      });
+      assertApi('gtmOnSuccess').wasCalled();
+setup: |-
+  const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+  const PUBLIC_KEY = 'pyxis_pk_GtmTemplate000000000000000000000';
+
+  const initData = function () {
+    return {
+      publicKey: PUBLIC_KEY,
+      endpoint: 'https://api.pyxis-analytics.dev',
+      action: 'init',
+      respectConsent: true
+    };
+  };
+
+  const trackData = function () {
+    return {
+      publicKey: PUBLIC_KEY,
+      endpoint: 'https://api.pyxis-analytics.dev',
+      action: 'track',
+      eventName: 'signup_completed',
+      eventProperties: [{ key: 'plan', value: 'pro' }],
+      respectConsent: true
+    };
+  };
+
+  const trackerOnPage = function (key) {
+    return key === 'pyxis' ? {} : undefined;
+  };
+
+
