@@ -10,6 +10,7 @@ import {
   sandboxedCode,
   templateSections,
   thumbnailDataUri,
+  toJson,
   transpileForSandbox,
 } from './build-template.mts';
 
@@ -132,6 +133,30 @@ describe('assembleTemplate', () => {
 describe('thumbnailDataUri', () => {
   it('embeds the PNG as a base64 data URI', () => {
     assert.equal(thumbnailDataUri(Uint8Array.from([1, 2, 3])), 'data:image/png;base64,AQID');
+  });
+});
+
+describe('toJson', () => {
+  it('escapes the characters Tag Manager escapes when it exports a template', () => {
+    assert.equal(
+      toJson({ help: "Your project's key <b>&</b> a=1", hint: 'plain text' }),
+      [
+        '{',
+        '  "help": "Your project\\u0027s key \\u003cb\\u003e\\u0026\\u003c/b\\u003e a\\u003d1",',
+        '  "hint": "plain text"',
+        '}',
+      ].join('\n'),
+    );
+  });
+
+  it('escapes the line and paragraph separators', () => {
+    const separators = String.fromCharCode(0x2028, 0x2029);
+    assert.equal(toJson([`a${separators}b`]), '[\n  "a\\u2028\\u2029b"\n]');
+  });
+
+  it('writes JSON that parses back to the same value', () => {
+    const value = { help: "it's <ok> & a=b", list: [1, true, null] };
+    assert.deepEqual(JSON.parse(toJson(value)), value);
   });
 });
 
