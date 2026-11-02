@@ -1,0 +1,29 @@
+name: Question
+description: Ask how to install Pyxis with Google Tag Manager.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Questions are public: never paste a key of another project, a token or anyone's personal
+        data. For your account, your plan or billing, write to hello@pyxis-analytics.dev from your
+        account's e-mail instead.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What you are trying to do and where you are stuck.
+    validations:
+      required: true
+  - type: textarea
+    id: setup
+    attributes:
+      label: Your setup
+      description: >-
+        Where your site runs (WordPress, Wix, Nuvemshop, your own code), how Tag Manager is
+        installed there and which consent banner you use, if any.
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried
+      description: The tags and triggers you set up, and what Preview mode showed.
