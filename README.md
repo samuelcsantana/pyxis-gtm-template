@@ -9,6 +9,7 @@
 Tag Manager, without writing code.**
 
 [![CI](https://github.com/samuelcsantana/pyxis-gtm-template/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/samuelcsantana/pyxis-gtm-template/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/samuelcsantana/pyxis-gtm-template/graph/badge.svg)](https://codecov.io/gh/samuelcsantana/pyxis-gtm-template)
 [![CodeQL](https://github.com/samuelcsantana/pyxis-gtm-template/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/samuelcsantana/pyxis-gtm-template/actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/samuelcsantana/pyxis-gtm-template/badge)](https://scorecard.dev/viewer/?uri=github.com/samuelcsantana/pyxis-gtm-template)
 <br>
