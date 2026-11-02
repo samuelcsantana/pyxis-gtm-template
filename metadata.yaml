@@ -1,3 +1,5 @@
 homepage: 'https://pyxis-analytics.dev'
 documentation: 'https://github.com/samuelcsantana/pyxis-gtm-template#readme'
-versions: []
+versions:
+  - sha: 7d5bb51cd4d5f3559cd98742d42c200cbac70715
+    changeNotes: First version. Loads pyxis-analytics 0.6.0 and tracks named events, respecting analytics_storage consent by default.
