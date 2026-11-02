@@ -35,6 +35,11 @@ without trailing commas in calls. Sandboxed JavaScript is ES5.1 plus arrow funct
 library and ESLint rejects the syntax and globals the sandbox lacks. Everything the tag does must
 live inside `run()`; the build refuses code outside it.
 
+`template.tpl` must stay byte for byte what the template editor exports, so that a template
+imported, saved and exported again in Tag Manager comes back unchanged. The JSON sections are
+written with the editor's escaping (an apostrophe as `\u0027`), and `src/tests.yaml` keeps the
+editor's layout, list items at column 0, which is why Prettier leaves that file alone.
+
 ## Scripts
 
 | Script                            | What it does                                                    |
