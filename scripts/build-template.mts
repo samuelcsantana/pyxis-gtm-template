@@ -18,6 +18,7 @@ export interface TemplateSources {
   readonly parameters: unknown;
   readonly code: string;
   readonly permissions: unknown;
+  readonly tests: string;
 }
 
 const INDENT = '  ';
@@ -99,6 +100,7 @@ export function templateSections(sources: TemplateSources, code: string): Templa
     { name: 'TEMPLATE_PARAMETERS', content: toJson(sources.parameters) },
     { name: 'SANDBOXED_JS_FOR_WEB_TEMPLATE', content: code },
     { name: 'WEB_PERMISSIONS', content: toJson(sources.permissions) },
+    { name: 'TESTS', content: sources.tests },
   ];
 }
 
@@ -113,6 +115,7 @@ export function readSources(root: URL): TemplateSources {
     parameters: readJson(new URL('src/template-parameters.json', root)),
     code: readFileSync(new URL('src/template.ts', root), 'utf8'),
     permissions: readJson(new URL('src/web-permissions.json', root)),
+    tests: readFileSync(new URL('src/tests.yaml', root), 'utf8'),
   };
 }
 
