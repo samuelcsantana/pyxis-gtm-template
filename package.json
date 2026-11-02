@@ -20,11 +20,13 @@
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint . --max-warnings 0",
-    "test:tooling": "node --test \"eslint-rules/**/*.test.mjs\""
+    "lint": "eslint . --max-warnings 0 && node scripts/check-no-comments.mts",
+    "test:tooling": "node --test \"eslint-rules/**/*.test.mjs\" \"scripts/**/*.test.mts\"",
+    "typecheck": "tsc -p scripts/tsconfig.json"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.10",
