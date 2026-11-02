@@ -42,7 +42,7 @@ people who run their site on WordPress, a site builder or a hosted store usually
 but many of them already have Google Tag Manager. This template puts Pyxis one tag away: paste the
 project's public key, pick a trigger, publish the container.
 
-What it loads is the same tracker, with the same promises: no cookies, no personal data, URLs reduced
+What it loads is the same tracker, with the same promises: no cookies, no stored IP addresses, URLs reduced
 to path templates, Global Privacy Control and Do Not Track honored
 ([the tracker's privacy rules](https://github.com/samuelcsantana/pyxis-sdk#privacy-by-design)).
 
@@ -83,7 +83,7 @@ A visitor who accepts later is measured from the next time an Initialize tag fir
 your consent banner pushes on acceptance as a second trigger of the Initialize tag (firing it twice
 on a page is harmless; the tracker loads and starts once).
 
-Pyxis sets no cookie and stores no personal data, but it keeps the current visit in the browser's
+Pyxis sets no cookie and stores no IP address, but it keeps the current visit in the browser's
 session storage. Turn the check off only when your consent banner already covers Pyxis another way.
 
 ## Nuvemshop
