@@ -6,6 +6,7 @@ import ts from 'typescript';
 export const RUN_SIGNATURE = 'export function run(require, data) {';
 export const RUN_END = '}';
 export const TEMPLATE_FILE = 'template.tpl';
+export const BYTE_ORDER_MARK = String.fromCharCode(0xfeff);
 
 export interface TemplateSection {
   readonly name: string;
@@ -19,6 +20,8 @@ export interface TemplateSources {
   readonly code: string;
   readonly permissions: unknown;
   readonly tests: string;
+  readonly terms: string;
+  readonly notes: string;
 }
 
 const INDENT = '  ';
@@ -96,9 +99,12 @@ export function toJson(value: unknown): string {
 }
 
 export function assembleTemplate(sections: readonly TemplateSection[]): string {
-  return sections
-    .map((section) => `___${section.name}___\n\n${section.content.trimEnd()}\n\n\n`)
-    .join('');
+  return (
+    BYTE_ORDER_MARK +
+    sections
+      .map((section) => `___${section.name}___\n\n${section.content.trimEnd()}\n\n\n`)
+      .join('')
+  );
 }
 
 export function templateSections(sources: TemplateSources, code: string): TemplateSection[] {
@@ -108,11 +114,13 @@ export function templateSections(sources: TemplateSources, code: string): Templa
     brand: { ...brand, thumbnail: thumbnailDataUri(sources.thumbnail) },
   };
   return [
+    { name: 'TERMS_OF_SERVICE', content: sources.terms },
     { name: 'INFO', content: toJson(info) },
     { name: 'TEMPLATE_PARAMETERS', content: toJson(sources.parameters) },
     { name: 'SANDBOXED_JS_FOR_WEB_TEMPLATE', content: code },
     { name: 'WEB_PERMISSIONS', content: toJson(sources.permissions) },
     { name: 'TESTS', content: sources.tests },
+    { name: 'NOTES', content: sources.notes },
   ];
 }
 
@@ -128,6 +136,8 @@ export function readSources(root: URL): TemplateSources {
     code: readFileSync(new URL('src/template.ts', root), 'utf8'),
     permissions: readJson(new URL('src/web-permissions.json', root)),
     tests: readFileSync(new URL('src/tests.yaml', root), 'utf8'),
+    terms: readFileSync(new URL('src/terms-of-service.txt', root), 'utf8'),
+    notes: readFileSync(new URL('src/notes.txt', root), 'utf8'),
   };
 }
 
