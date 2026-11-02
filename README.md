@@ -161,7 +161,8 @@ src/
 ├── template-parameters.json  # the fields and their validators
 ├── web-permissions.json      # what the template may do in the page
 ├── tests.yaml                # the scenarios of the editor's Tests tab
-└── info.json                 # name, category, description
+├── info.json                 # name, category, description
+└── terms-of-service.txt      # the gallery terms, as the editor exports them
 scripts/build-template.mts    # assembles template.tpl
 test/                         # fake sandbox, tag code, fields and editor scenarios
 template.tpl                  # generated; what the gallery reads

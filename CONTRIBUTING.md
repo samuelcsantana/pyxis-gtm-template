@@ -21,13 +21,15 @@ npm run build      # writes template.tpl from src/
 `template.tpl` is the file the Community Template Gallery reads, and it is **generated**: never edit
 it by hand. `npm run build` assembles it from:
 
-| Source                         | Section of `template.tpl`                                               |
-| ------------------------------ | ----------------------------------------------------------------------- |
-| `src/info.json`                | `___INFO___`, with the thumbnail from `.github/assets/thumbnail-96.png` |
-| `src/template-parameters.json` | `___TEMPLATE_PARAMETERS___` (the fields)                                |
-| `src/template.ts`              | `___SANDBOXED_JS_FOR_WEB_TEMPLATE___` (the code)                        |
-| `src/web-permissions.json`     | `___WEB_PERMISSIONS___`                                                 |
-| `src/tests.yaml`               | `___TESTS___` (the scenarios of the editor)                             |
+| Source                         | Section of `template.tpl`                                                    |
+| ------------------------------ | ---------------------------------------------------------------------------- |
+| `src/terms-of-service.txt`     | `___TERMS_OF_SERVICE___`, the gallery terms the owner accepted in the editor |
+| `src/info.json`                | `___INFO___`, with the thumbnail from `.github/assets/thumbnail-96.png`      |
+| `src/template-parameters.json` | `___TEMPLATE_PARAMETERS___` (the fields)                                     |
+| `src/template.ts`              | `___SANDBOXED_JS_FOR_WEB_TEMPLATE___` (the code)                             |
+| `src/web-permissions.json`     | `___WEB_PERMISSIONS___`                                                      |
+| `src/tests.yaml`               | `___TESTS___` (the scenarios of the editor)                                  |
+| `src/notes.txt`                | `___NOTES___`, the note the editor wrote on export                           |
 
 The code section is the body of `run()` in `src/template.ts`, transpiled to ES2015 and formatted
 without trailing commas in calls. Sandboxed JavaScript is ES5.1 plus arrow functions, `const` and

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, it } from 'node:test';
 import {
   assembleTemplate,
+  BYTE_ORDER_MARK,
   buildTemplate,
   extractRunBody,
   readSources,
@@ -125,8 +126,13 @@ describe('assembleTemplate', () => {
         { name: 'INFO', content: '{}\n' },
         { name: 'TESTS', content: 'scenarios: []' },
       ]),
-      '___INFO___\n\n{}\n\n\n___TESTS___\n\nscenarios: []\n\n\n',
+      `${BYTE_ORDER_MARK}___INFO___\n\n{}\n\n\n___TESTS___\n\nscenarios: []\n\n\n`,
     );
+  });
+
+  it('starts the file with the UTF-8 byte order mark the editor writes', () => {
+    const bytes = Buffer.from(assembleTemplate([]), 'utf8');
+    assert.deepEqual([...bytes], [0xef, 0xbb, 0xbf]);
   });
 });
 
@@ -170,19 +176,34 @@ describe('templateSections', () => {
         code: '',
         permissions: [],
         tests: 'scenarios: []',
+        terms: 'By creating or modifying this file you agree to the terms.\n',
+        notes: 'Created on 02/11/2026, 14:57:05\n',
       },
       'data.gtmOnSuccess();',
     );
     assert.deepEqual(
       sections.map((section) => section.name),
-      ['INFO', 'TEMPLATE_PARAMETERS', 'SANDBOXED_JS_FOR_WEB_TEMPLATE', 'WEB_PERMISSIONS', 'TESTS'],
+      [
+        'TERMS_OF_SERVICE',
+        'INFO',
+        'TEMPLATE_PARAMETERS',
+        'SANDBOXED_JS_FOR_WEB_TEMPLATE',
+        'WEB_PERMISSIONS',
+        'TESTS',
+        'NOTES',
+      ],
     );
-    assert.deepEqual(JSON.parse(sections[0]?.content ?? ''), {
+    assert.equal(
+      sections[0]?.content,
+      'By creating or modifying this file you agree to the terms.\n',
+    );
+    assert.deepEqual(JSON.parse(sections[1]?.content ?? ''), {
       displayName: 'Pyxis Analytics',
       brand: { id: 'brand_dummy', thumbnail: 'data:image/png;base64,AQID' },
     });
-    assert.equal(sections[2]?.content, 'data.gtmOnSuccess();');
-    assert.equal(sections[4]?.content, 'scenarios: []');
+    assert.equal(sections[3]?.content, 'data.gtmOnSuccess();');
+    assert.equal(sections[5]?.content, 'scenarios: []');
+    assert.equal(sections[6]?.content, 'Created on 02/11/2026, 14:57:05\n');
   });
 });
 
