@@ -1,0 +1,34 @@
+name: Bug report
+description: The template does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the report. Security issues go through private vulnerability reporting instead, never a public issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you set up in Tag Manager, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: >-
+        The tag's settings (action, trigger, consent check) and what Tag Manager's Preview mode
+        shows. Never paste a key of another project, a token or anyone's personal data.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Template version and site
+      placeholder: Gallery version updated in November 2026, WordPress with a consent banner, Chrome 141
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: The [Pyxis] lines of the browser console in Preview mode, with any personal data removed.
+      render: text
