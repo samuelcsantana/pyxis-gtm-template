@@ -31,7 +31,7 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "alwaysInSummary": true,
     "valueHint": "pyxis_pk_...",
-    "help": "Your project's public key, in the Pyxis dashboard under Install. It only lets this site send events to your project, so it is safe on a public page.",
+    "help": "Your project\u0027s public key, in the Pyxis dashboard under Install. It only lets this site send events to your project, so it is safe on a public page.",
     "valueValidators": [
       {
         "type": "NON_EMPTY",
@@ -172,7 +172,7 @@ ___TEMPLATE_PARAMETERS___
     "checkboxText": "Respect analytics_storage consent",
     "simpleValueType": true,
     "defaultValue": true,
-    "help": "On: while Consent Mode has analytics_storage denied, the tracker is not loaded and no event is sent. Pyxis uses no cookies and stores no personal data, but it keeps the current visit in the browser's session storage, so leave this on unless your consent banner already covers Pyxis another way."
+    "help": "On: while Consent Mode has analytics_storage denied, the tracker is not loaded and no event is sent. Pyxis uses no cookies and stores no personal data, but it keeps the current visit in the browser\u0027s session storage, so leave this on unless your consent banner already covers Pyxis another way."
   }
 ]
 

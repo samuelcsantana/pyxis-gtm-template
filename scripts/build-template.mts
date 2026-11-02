@@ -79,8 +79,20 @@ export function thumbnailDataUri(png: Uint8Array): string {
   return `data:image/png;base64,${Buffer.from(png).toString('base64')}`;
 }
 
-function toJson(value: unknown): string {
-  return JSON.stringify(value, null, 2);
+const LINE_SEPARATOR = 0x2028;
+const PARAGRAPH_SEPARATOR = 0x2029;
+
+const HTML_UNSAFE_CHARACTER = new RegExp(
+  `['<>&=${String.fromCharCode(LINE_SEPARATOR, PARAGRAPH_SEPARATOR)}]`,
+  'g',
+);
+
+function unicodeEscape(character: string): string {
+  return `\\u${character.charCodeAt(0).toString(16).padStart(4, '0')}`;
+}
+
+export function toJson(value: unknown): string {
+  return JSON.stringify(value, null, 2).replace(HTML_UNSAFE_CHARACTER, unicodeEscape);
 }
 
 export function assembleTemplate(sections: readonly TemplateSection[]): string {
