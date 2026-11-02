@@ -188,7 +188,7 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const PYXIS_SCRIPT_URL =
-  'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+  'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js';
 const SCRIPT_CACHE_TOKEN = 'pyxis-analytics';
 const CONSENT_TYPE = 'analytics_storage';
 const RESERVED_EVENT_NAMES = ['page_view', 'identify', 'api_request'];
@@ -297,7 +297,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js"
+                "string": "https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js"
               }
             ]
           }
@@ -623,7 +623,7 @@ scenarios:
     });
     assertApi('gtmOnSuccess').wasCalled();
 setup: |-
-  const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+  const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js';
   const PUBLIC_KEY = 'pyxis_pk_GtmTemplate000000000000000000000';
 
   const initData = function () {
