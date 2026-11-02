@@ -36,5 +36,46 @@ export default defineConfig(
     files: ['**/*.mjs'],
     extends: [tseslint.configs.disableTypeChecked],
   },
+  {
+    files: ['src/**/*.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        ...[
+          'NewExpression',
+          'ThisExpression',
+          'ClassDeclaration',
+          'ClassExpression',
+          'TemplateLiteral',
+          'TaggedTemplateExpression',
+          'Literal[regex]',
+          'ChainExpression',
+          "LogicalExpression[operator='??']",
+          'AssignmentExpression[operator=/^(\\?\\?|\\|\\||&&|\\*\\*)=$/]',
+          "BinaryExpression[operator='**']",
+          'SpreadElement',
+          'ForOfStatement',
+          'ForInStatement',
+          'AwaitExpression',
+          'YieldExpression',
+          'ImportExpression',
+        ].map((selector) => ({
+          selector: `FunctionDeclaration[id.name='run'] ${selector}`,
+          message:
+            'Google Tag Manager runs this code as sandboxed JavaScript (ES5.1 with arrow functions, const and let): keep to that subset.',
+        })),
+      ],
+      'no-restricted-globals': [
+        'error',
+        ...['window', 'document', 'globalThis', 'JSON', 'Math', 'Object', 'Array', 'String'].map(
+          (name) => ({
+            name,
+            message:
+              'Sandboxed JavaScript has no globals besides require and data: use require() for the APIs.',
+          }),
+        ),
+      ],
+    },
+  },
   prettier,
 );

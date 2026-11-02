@@ -22,15 +22,20 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0 && node scripts/check-no-comments.mts",
     "test:tooling": "node --test \"eslint-rules/**/*.test.mjs\" \"scripts/**/*.test.mts\"",
-    "typecheck": "tsc -p scripts/tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json && tsc -p src/tsconfig.json && tsc -p scripts/tsconfig.json",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.1.0",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.10",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.72.1"
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.1.0"
   }
 }
