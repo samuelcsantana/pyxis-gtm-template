@@ -3,3 +3,4 @@ package-lock.json
 template.tpl
 CODE_OF_CONDUCT.md
 LICENSE
+src/tests.yaml
