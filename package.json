@@ -1,0 +1,27 @@
+{
+  "name": "pyxis-gtm-template",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Google Tag Manager community template that installs the Pyxis tracker without code.",
+  "homepage": "https://github.com/samuelcsantana/pyxis-gtm-template#readme",
+  "bugs": {
+    "url": "https://github.com/samuelcsantana/pyxis-gtm-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelcsantana/pyxis-gtm-template.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Samuel Santana",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}
