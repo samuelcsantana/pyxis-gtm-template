@@ -1,0 +1,141 @@
+[
+  {
+    "type": "TEXT",
+    "name": "publicKey",
+    "displayName": "Public key",
+    "simpleValueType": true,
+    "alwaysInSummary": true,
+    "valueHint": "pyxis_pk_...",
+    "help": "Your project's public key, in the Pyxis dashboard under Install. It only lets this site send events to your project, so it is safe on a public page.",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY",
+        "errorMessage": "Paste the public key of your Pyxis project."
+      },
+      {
+        "type": "REGEX",
+        "args": ["^pyxis_pk_[A-Za-z0-9]{32}$"],
+        "errorMessage": "A public key starts with pyxis_pk_ followed by 32 letters and digits."
+      }
+    ]
+  },
+  {
+    "type": "TEXT",
+    "name": "endpoint",
+    "displayName": "Endpoint",
+    "simpleValueType": true,
+    "defaultValue": "https://api.pyxis-analytics.dev",
+    "help": "Where the tracker sends events. Keep the default unless the Pyxis dashboard shows another address.",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      },
+      {
+        "type": "REGEX",
+        "args": ["^https?://[^/?#]+(/[^?#]*)?$"],
+        "errorMessage": "The endpoint is an address such as https://api.pyxis-analytics.dev."
+      }
+    ]
+  },
+  {
+    "type": "SELECT",
+    "name": "action",
+    "displayName": "Action",
+    "macrosInSelect": false,
+    "selectItems": [
+      {
+        "value": "init",
+        "displayValue": "Initialize"
+      },
+      {
+        "value": "track",
+        "displayValue": "Track event"
+      }
+    ],
+    "simpleValueType": true,
+    "defaultValue": "init",
+    "alwaysInSummary": true,
+    "help": "Initialize loads the tracker and counts page views: fire it on every page, with the Initialization - All Pages trigger. Track event sends one named event: fire it on the trigger of that event, with the Initialize tag set up as a setup tag in Tag sequencing."
+  },
+  {
+    "type": "TEXT",
+    "name": "eventName",
+    "displayName": "Event name",
+    "simpleValueType": true,
+    "valueHint": "signup_completed",
+    "help": "Lowercase letters, digits and underscores, starting with a letter, up to 64 characters. page_view, identify and api_request are reserved for the tracker.",
+    "enablingConditions": [
+      {
+        "paramName": "action",
+        "paramValue": "track",
+        "type": "EQUALS"
+      }
+    ],
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      },
+      {
+        "type": "REGEX",
+        "args": ["^(?!(page_view|identify|api_request)$)[a-z][a-z0-9_]{0,63}$"],
+        "errorMessage": "Use lowercase letters, digits and underscores, starting with a letter, up to 64 characters, and none of the reserved names page_view, identify and api_request."
+      }
+    ]
+  },
+  {
+    "type": "SIMPLE_TABLE",
+    "name": "eventProperties",
+    "displayName": "Event properties",
+    "newRowButtonText": "Add property",
+    "help": "Up to 10 properties. Never put personal data here: no email, name, phone or document number. Typed values are sent as text; a variable can also send a number or true/false. Text longer than 100 characters is dropped.",
+    "enablingConditions": [
+      {
+        "paramName": "action",
+        "paramValue": "track",
+        "type": "EQUALS"
+      }
+    ],
+    "simpleTableColumns": [
+      {
+        "type": "TEXT",
+        "name": "key",
+        "displayName": "Name",
+        "defaultValue": "",
+        "isUnique": true,
+        "valueHint": "plan",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          },
+          {
+            "type": "REGEX",
+            "args": ["^[a-z0-9_]{1,40}$"],
+            "errorMessage": "Use lowercase letters, digits and underscores, up to 40 characters."
+          }
+        ]
+      },
+      {
+        "type": "TEXT",
+        "name": "value",
+        "displayName": "Value",
+        "defaultValue": "",
+        "valueHint": "pro"
+      }
+    ],
+    "valueValidators": [
+      {
+        "type": "TABLE_ROW_COUNT",
+        "args": [0, 10],
+        "errorMessage": "Pyxis keeps up to 10 properties per event."
+      }
+    ]
+  },
+  {
+    "type": "CHECKBOX",
+    "name": "respectConsent",
+    "checkboxText": "Respect analytics_storage consent",
+    "simpleValueType": true,
+    "defaultValue": true,
+    "help": "On: while Consent Mode has analytics_storage denied, the tracker is not loaded and no event is sent. Pyxis uses no cookies and stores no personal data, but it keeps the current visit in the browser's session storage, so leave this on unless your consent banner already covers Pyxis another way."
+  }
+]

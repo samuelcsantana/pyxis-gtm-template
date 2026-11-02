@@ -25,7 +25,8 @@
     "typecheck": "tsc -p tsconfig.json && tsc -p src/tsconfig.json && tsc -p scripts/tsconfig.json",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build": "node scripts/build-template.mts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
