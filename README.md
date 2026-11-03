@@ -146,6 +146,10 @@ npm run test:cov    # tag code and editor scenarios, 100% coverage gate
   reaches an API that `src/web-permissions.json` does not allow, as Tag Manager does. Coverage of
   `src/` is **100%** of statements, branches, functions and lines, enforced by Vitest's thresholds,
   with no exclusion.
+- **Properties:** property-based tests with [fast-check](https://fast-check.dev)
+  (`test/template.property.test.ts`) check the rules over generated tag data: exactly one outcome,
+  nothing loaded or called while `analytics_storage` is denied, the key and endpoint passed on
+  unchanged, a reserved or empty event name never sent and any other one sent as typed.
 - **Editor scenarios:** `src/tests.yaml` becomes the template's Tests tab, written against Tag
   Manager's test API. CI runs the same scenarios under a stand-in for that API.
 - **Fields:** the validators are tested against the tracker's rules (key, event name, property
