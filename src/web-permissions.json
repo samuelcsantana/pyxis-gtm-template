@@ -34,7 +34,7 @@
             "listItem": [
               {
                 "type": 1,
-                "string": "https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js"
+                "string": "https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js"
               }
             ]
           }

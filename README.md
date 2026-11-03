@@ -22,8 +22,8 @@ Tag Manager, without writing code.**
 
 </div>
 
-> **Status:** waiting for `pyxis-analytics` 0.6.0, the tracker version the template loads, to reach
-> npm; the template then goes to Tag Manager's Community Template Gallery.
+> **Status:** submitted to Tag Manager's Community Template Gallery and waiting for its review; until
+> it is listed, import [`template.tpl`](template.tpl). The template loads `pyxis-analytics` 0.7.0.
 
 ## Ecosystem
 
@@ -45,6 +45,8 @@ project's public key, pick a trigger, publish the container.
 What it loads is the same tracker, with the same promises: no cookies, no stored IP addresses, URLs reduced
 to path templates, Global Privacy Control and Do Not Track honored
 ([the tracker's privacy rules](https://github.com/samuelcsantana/pyxis-sdk#privacy-by-design)).
+When the project counts unique visitors, the tracker the template loads counts them too, with no
+identifier.
 
 ## Install
 
@@ -84,7 +86,9 @@ your consent banner pushes on acceptance as a second trigger of the Initialize t
 on a page is harmless; the tracker loads and starts once).
 
 Pyxis sets no cookie and stores no IP address, but it keeps the current visit in the browser's
-session storage. Turn the check off only when your consent banner already covers Pyxis another way.
+session storage and, when the project counts unique visitors, only when the site's day and month end
+in its local storage. Turn the check off only when your consent banner already covers Pyxis another
+way.
 
 ## Nuvemshop
 
@@ -98,7 +102,7 @@ completed; this is a tag template, not Custom HTML. Add every address the store 
 The template asks Tag Manager for the narrowest permissions it needs, and the container shows them
 before anyone adds it:
 
-- **Injects scripts:** only `https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js`,
+- **Injects scripts:** only `https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js`,
   an exact version, never a range or `latest`. A new tracker version is a new template version, which
   Tag Manager announces to the containers that use it.
 - **Accesses global variables:** reads `pyxis`, calls `pyxis.init` and `pyxis.track`; nothing else.
@@ -113,7 +117,7 @@ flowchart LR
     sources["src/: fields, tag code,<br>permissions, scenarios"] -->|npm run build| tpl[template.tpl]
   end
   tpl -->|gallery or import| container[Tag Manager container]
-  container -->|Initialize: injectScript| cdn["jsDelivr<br>pyxis-analytics@0.6.0"]
+  container -->|Initialize: injectScript| cdn["jsDelivr<br>pyxis-analytics@0.7.0"]
   cdn --> tracker[window.pyxis]
   container -->|Track event: callInWindow| tracker
   tracker -->|batches, no cookies| api[Pyxis API]

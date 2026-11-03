@@ -9,7 +9,7 @@ import {
   tagData,
 } from './fake-sandbox.js';
 
-const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js';
 const CACHE_TOKEN = 'pyxis-analytics';
 
 function runTag(data: ReturnType<typeof tagData>, options: FakeSandboxOptions = {}) {

@@ -41,7 +41,7 @@ export type SandboxRequire = <Name extends keyof SandboxApis>(name: Name) => San
 
 export function run(require: SandboxRequire, data: TagData): void {
   const PYXIS_SCRIPT_URL =
-    'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+    'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js';
   const SCRIPT_CACHE_TOKEN = 'pyxis-analytics';
   const CONSENT_TYPE = 'analytics_storage';
   const RESERVED_EVENT_NAMES = ['page_view', 'identify', 'api_request'];

@@ -115,7 +115,7 @@ scenarios:
     });
     assertApi('gtmOnSuccess').wasCalled();
 setup: |-
-  const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.6.0/dist/pyxis.global.js';
+  const SCRIPT_URL = 'https://cdn.jsdelivr.net/npm/pyxis-analytics@0.7.0/dist/pyxis.global.js';
   const PUBLIC_KEY = 'pyxis_pk_GtmTemplate000000000000000000000';
 
   const initData = function () {
